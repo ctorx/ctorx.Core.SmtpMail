@@ -1,6 +1,6 @@
 ﻿namespace ctorx.Core.SmtpMail
 {
-    public class SmtpSettings
+    public class SmtpOptions
     {
         /// <summary>
         /// Gets or sets the SmtpHost

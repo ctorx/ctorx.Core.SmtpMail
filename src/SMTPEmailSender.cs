@@ -10,14 +10,14 @@ namespace ctorx.Core.SmtpMail
 {
 	public class SmtpEmailSender : IEmailSender
 	{
-	    readonly SmtpSettings SmtpSettings;
+	    readonly SmtpOptions SmtpOptions;
 
 	    /// <summary>
 	    /// ctor the Mighty
 	    /// </summary>	    
-		public SmtpEmailSender(IOptions<SmtpSettings> smtpSettingsProvider)
+		public SmtpEmailSender(IOptions<SmtpOptions> smtpSettingsProvider)
 		{
-		    this.SmtpSettings = smtpSettingsProvider.Value;
+		    this.SmtpOptions = smtpSettingsProvider.Value;
 		}
 
 		/// <summary>
@@ -31,7 +31,7 @@ namespace ctorx.Core.SmtpMail
 			}
 
             // Fail Gracefully if SMTP Settings are not set
-		    if(string.IsNullOrWhiteSpace(this.SmtpSettings.SmtpHost) || this.SmtpSettings.SmtpPort == 0)
+		    if(string.IsNullOrWhiteSpace(this.SmtpOptions.SmtpHost) || this.SmtpOptions.SmtpPort == 0)
 		    {
 		        return;
 		    }
@@ -63,14 +63,14 @@ namespace ctorx.Core.SmtpMail
 			}
 
 			// Set SMTP Settings
-			var smtpClient = new SmtpClient(this.SmtpSettings.SmtpHost, this.SmtpSettings.SmtpPort);
-			smtpClient.EnableSsl = this.SmtpSettings.SmtpEnableSsl;
+			var smtpClient = new SmtpClient(this.SmtpOptions.SmtpHost, this.SmtpOptions.SmtpPort);
+			smtpClient.EnableSsl = this.SmtpOptions.SmtpEnableSsl;
 
 			// Set Credentials
-			if (!string.IsNullOrWhiteSpace(this.SmtpSettings.SmtpUsername) || !string.IsNullOrWhiteSpace(this.SmtpSettings.SmtpPassword))
+			if (!string.IsNullOrWhiteSpace(this.SmtpOptions.SmtpUsername) || !string.IsNullOrWhiteSpace(this.SmtpOptions.SmtpPassword))
 			{
 				smtpClient.UseDefaultCredentials = false;
-				smtpClient.Credentials = new NetworkCredential(this.SmtpSettings.SmtpUsername, this.SmtpSettings.SmtpPassword);
+				smtpClient.Credentials = new NetworkCredential(this.SmtpOptions.SmtpUsername, this.SmtpOptions.SmtpPassword);
 			}
 
 			// Send Message
