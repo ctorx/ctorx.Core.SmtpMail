@@ -14,6 +14,9 @@ namespace ctorx.Core.SmtpMail
         public static IServiceCollection AddSmtpMail(this IServiceCollection services, Action<SmtpOptions> options)
         {
             services.Configure(options);
+
+            services.AddSingleton<IEmailSender, SmtpEmailSender>();
+
             return services;
         }
 
