@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
@@ -40,28 +42,10 @@ namespace ctorx.Core.SmtpMail
 			message.From = new MailAddress(emailMessage.SenderAddress, emailMessage.SenderDisplayName);
 
 			// Set Recipients
-		    foreach (var recipient in emailMessage.ToRecipients)
-		    {
-                message.To.Add(recipient);
-		    }
-
-            // Set CC
-		    foreach (var recipient in emailMessage.CcRecipients)
-		    {
-		        message.CC.Add(recipient);
-		    }
-
-            // Set BCC
-		    foreach (var recipient in emailMessage.BccRecipients)
-		    {
-		        message.Bcc.Add(recipient);
-		    }
-
-            // Set ReplyTo
-		    foreach (var recipient in emailMessage.ReplyToRecipients)
-		    {
-		        message.ReplyToList.Add(recipient);
-		    }
+		    this.ApplyRecipients(message.To, emailMessage.ToRecipients);
+		    this.ApplyRecipients(message.CC, emailMessage.CcRecipients);
+		    this.ApplyRecipients(message.Bcc, emailMessage.BccRecipients);
+		    this.ApplyRecipients(message.ReplyToList, emailMessage.ReplyToRecipients);
             
 			// Set Content
 			message.IsBodyHtml = emailMessage.FormatAsHtml;
@@ -92,5 +76,13 @@ namespace ctorx.Core.SmtpMail
 			// Send Message
 			await smtpClient.SendMailAsync(message);
 		}
+
+	    void ApplyRecipients(MailAddressCollection target, IList<string> recipients)
+	    {
+	        foreach (var recipient in recipients)
+	        {
+	            target.Add(recipient);
+	        }
+        }
 	}
 }
