@@ -7,7 +7,7 @@
     <AssemblyName>ctorx.Core.SmtpMail</AssemblyName>
     <PackageId>ctorx.Core.SmtpMail</PackageId>
     <Authors>Matthew Marksbury</Authors>
-    <Description>Simple .NET Core SMTP Mail Librar</Description>
+    <Description>Simple .NET Core SMTP Mail Library</Description>
     <PackageTags></PackageTags>
     <PackageProjectUrl>https://github.com/ctorx/ctorx.Core.SmtpMail/</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/ctorx/ctorx.Core.SmtpMail/master/LICENSE</PackageLicenseUrl>
